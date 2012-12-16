@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="addon.video.4TRBrowser"
+       name="4TheRecord Browser"
+       version="1.0.0"
+       provider-name="dero">
+  <requires>
+    <import addon="xbmc.python" version="1.0"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource"
+            library="default.py">
+        <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <summary>ForTheRecord Browser Plugin</summary>
+    <description>Let's you browse through the recordings' library of your ForTheRecord server -- with extensive caching and automatic updating of listings</description>
+  </extension>
+</addon>

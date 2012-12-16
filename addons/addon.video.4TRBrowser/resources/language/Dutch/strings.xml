@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+    <!-- Category strings -->
+    <string id="33500">ForTheRecord</string>
+    <string id="33501">ForTheRecord Server</string>
+    <string id="33502">ForTheRecord Poort</string>
+    <string id="33503">RegExp Pattern for File Path Substitution</string>
+    <string id="33504">Repleacement Rule for File Path Substitution</string>
+    <string id="33505">Sorteer per Opnamegroep</string>
+    <string id="33506">Sorteer per titel</string>
+    <string id="33507">Laatste opname per titel</string>   
+    <string id="33508">Schema changed -- clearing cache</string>
+    <string id="33509">Error contacting ForTheRecord server (see log)</string>
+    <string id="33510">Listing changed</string>    
+    <string id="33511">Datum formaat</string>
+    <string id="33512">Append date to label</string>    
+ </strings>

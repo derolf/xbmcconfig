@@ -1,0 +1,29 @@
+<sources>
+    <programs>
+        <default pathversion="1"></default>
+    </programs>
+    <video>
+        <default pathversion="1"></default>
+        <source>
+            <name>Videos</name>
+            <path pathversion="1">smb://HTPC/Videos/</path>
+        </source>
+        <source>
+            <name>Kinder</name>
+            <path pathversion="1">smb://HTPC/Videos/Kinder/</path>
+        </source>
+    </video>
+    <music>
+        <default pathversion="1">Alle</default>
+        <source>
+            <name>Alle</name>
+            <path pathversion="1">smb://HTPC/Music/Picard/</path>
+        </source>
+    </music>
+    <pictures>
+        <default pathversion="1"></default>
+    </pictures>
+    <files>
+        <default pathversion="1"></default>
+    </files>
+</sources>

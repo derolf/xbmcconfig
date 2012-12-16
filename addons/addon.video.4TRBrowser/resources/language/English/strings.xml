@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+    <string id="33500">ForTheRecord</string>
+    <string id="33501">ForTheRecord Server</string>
+    <string id="33502">ForTheRecord Port</string>
+    <string id="33503">RegExp Pattern for File Path Substitution</string>
+    <string id="33504">Repleacement Rule for File Path Substitution</string>
+    <string id="33505">Group by Schedule Name</string>
+    <string id="33506">Group by Program Title</string>
+    <string id="33507">List Latest Recording for Every Program Title</string>
+    <string id="33508">Schema changed -- clearing cache</string>
+    <string id="33509">Error contacting ForTheRecord server (see log)</string>
+    <string id="33510">Listing changed</string>
+    <string id="33511">Date format</string>
+    <string id="33512">Append date to label</string>
+</strings>
