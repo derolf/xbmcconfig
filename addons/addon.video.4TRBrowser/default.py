@@ -15,6 +15,8 @@ webaddress= 	"http://" + ip_addr + ":" + ip_port
 cachePath= 	os.getcwd() + "/cache/"
 filename_re= 	re.compile( settings.getSetting('fn_re' ) )
 filename_sub=	settings.getSetting('fn_sub')
+date_format=	settings.getSetting('dt_format')
+date_label=	settings.getSetting('dt_label')
 
 # some strings
 SGroupBySchedule= 	 settings.getLocalizedString( 33505 ) 
@@ -240,7 +242,7 @@ def date( s ):
   h= int( mat.group( 2 ) )
   m= int( mat.group( 3 ) )
   tm= datetime.datetime.utcfromtimestamp(ts + h * 3600 + m * 60 )
-  return tm.strftime( "%d.%m.%y %H:%M" )
+  return tm.strftime( date_format )
     
 def getRecordingsGroupedByProgramTitle(programTitle,latestProgramStartTime, recordingsCount):
   return getRecordingGroup( "RecordingsForProgramTitle/Television", "ProgramTitle", programTitle, latestProgramStartTime, recordingsCount)
@@ -292,6 +294,7 @@ def addRecording( id, total, includeTitle ):
       if d[ 'EpisodeNumberDisplay' ] != '':
 	label= label + " (" + d[ 'EpisodeNumberDisplay' ] + ")"
 	tagline= tagline + " - " + d[ 'EpisodeNumberDisplay' ]
+      if date_label: label= label + " " + date( d[ "ProgramStartTime" ] )
       info=  { "Plot": plot, "Tagline": tagline, "Title": subTitle }
       addDirectoryItemURL( label, "", info, tn, buildPlaybackURL( d[ "RecordingFileName" ] ), total )
       
