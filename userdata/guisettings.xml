@@ -821,9 +821,9 @@
         <setting type="string" name="skin.confluence.HomeProgramButton6"></setting>
         <setting type="string" name="skin.confluence.Home_Custom_Back_TV_Folder"></setting>
         <setting type="string" name="skin.quartz.CustomMovies.1.Label">Kinder</setting>
-        <setting type="string" name="skin.quartz.CustomMovies.1.Path">ActivateWindow(10025,&quot;/network/HTPC/Videos/Kinder/&quot;,return)</setting>
+        <setting type="string" name="skin.quartz.CustomMovies.1.Path">ActivateWindow(10025,&quot;smb://HTPC/Videos/Kinder/&quot;,return)</setting>
         <setting type="string" name="skin.quartz.CustomMovies.2.Label">Videos</setting>
-        <setting type="string" name="skin.quartz.CustomMovies.2.Path">ActivateWindow(10025,&quot;/network/HTPC/Videos/&quot;,return)</setting>
+        <setting type="string" name="skin.quartz.CustomMovies.2.Path">ActivateWindow(10025,&quot;smb://HTPC/Videos/&quot;,return)</setting>
         <setting type="string" name="skin.quartz.CustomMovies.3.Label"></setting>
         <setting type="string" name="skin.quartz.CustomMovies.3.Path"></setting>
         <setting type="string" name="skin.quartz.CustomMovies.4.Label"></setting>
