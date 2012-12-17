@@ -15,7 +15,7 @@ webaddress= 	"http://" + ip_addr + ":" + ip_port
 cachePath= 	os.getcwd() + "/cache/"
 filename_re= 	re.compile( settings.getSetting('fn_re' ) )
 filename_sub=	settings.getSetting('fn_sub')
-date_format=	settings.getSetting('dt_fmt')
+date_fmt=	settings.getSetting('dt_fmt')
 date_label=	settings.getSetting('dt_label')
 
 # some strings
