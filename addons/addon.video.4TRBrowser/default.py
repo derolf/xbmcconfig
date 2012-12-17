@@ -16,7 +16,7 @@ cachePath= 	os.getcwd() + "/cache/"
 filename_re= 	re.compile( settings.getSetting('fn_re' ) )
 filename_sub=	settings.getSetting('fn_sub')
 date_fmt=	settings.getSetting('dt_fmt')
-date_label=	bool(settings.getSetting('dt_label'))
+date_label=	settings.getSetting('dt_label').lower() == "true"
 
 # some strings
 SGroupBySchedule= 	 settings.getLocalizedString( 33505 ) 
