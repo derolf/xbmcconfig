@@ -1,5 +1,5 @@
 <settings>
-    <setting id="dt_fmt" value="/network/\1/\2" />
+    <setting id="dt_fmt" value="" />
     <setting id="dt_label" value="true" />
     <setting id="fn_re" value="^//([^/]*)/(.*)$" />
     <setting id="fn_sub" value="smb://HTPC/\2" />
