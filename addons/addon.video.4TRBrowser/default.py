@@ -294,7 +294,7 @@ def addRecording( id, total, includeTitle ):
       if d[ 'EpisodeNumberDisplay' ] != '':
 	label= label + " (" + d[ 'EpisodeNumberDisplay' ] + ")"
 	tagline= tagline + " - " + d[ 'EpisodeNumberDisplay' ]
-      if date_label: label= label + " " + date( d[ "ProgramStartTime" ] )
+      if date_label: label= label + " - " + date( d[ "ProgramStartTime" ] )
       info=  { "Plot": plot, "Tagline": tagline, "Title": subTitle }
       addDirectoryItemURL( label, "", info, tn, buildPlaybackURL( d[ "RecordingFileName" ] ), total )
       
@@ -347,6 +347,7 @@ def GroupBySchedule():
     for l in li:
       m= l[1]
       label= m[ 'ScheduleName' ] + " (" + str( m[ 'RecordingsCount' ] ) +")"
+      if date_label: label= label + " - " + date( m[ "LatestProgramStartTime" ] )
       info= { "Title": m[ 'ScheduleName' ], "Tagline": date( m[ "LatestProgramStartTime" ] ) }
       params= { "ScheduleId" : m[ "ScheduleId" ], "RecordingsCount": m[ "RecordingsCount" ], "LatestProgramStartTime" : m[ "LatestProgramStartTime" ] }
       tn= getLatestCachedThumbnailURL( getCachedLatestRecordings( "ScheduleId", m[ "ScheduleId" ] ), 512 )
@@ -361,6 +362,7 @@ def GroupByProgramTitle():
     for l in li:
       m= l[1]
       label= m[ 'ProgramTitle' ] + " (" + str( m[ 'RecordingsCount' ] ) +")"
+      if date_label: label= label + " - " + date( m[ "LatestProgramStartTime" ] )
       info= { "Title": m[ 'ProgramTitle' ], "Tagline": date( m[ "LatestProgramStartTime" ] ) }
       params= { "ProgramTitle" : m[ "ProgramTitle" ], "RecordingsCount": m[ "RecordingsCount" ], "LatestProgramStartTime" : m[ "LatestProgramStartTime" ] }
       tn= getLatestCachedThumbnailURL( getCachedLatestRecordings( "ProgramTitle", m[ "ProgramTitle" ] ), 512 )
