@@ -1,6 +1,6 @@
 <advancedsettings>
  <gui>    
-   <algorithmdirtyregions>1</algorithmdirtyregions>
+   <algorithmdirtyregions>3</algorithmdirtyregions>
    <nofliptimeout>1000</nofliptimeout>
  </gui>
   <video>
