@@ -15,7 +15,7 @@ webaddress= 	"http://" + ip_addr + ":" + ip_port
 cachePath= 	os.getcwd() + "/cache/"
 filename_re= 	re.compile( settings.getSetting('fn_re' ) )
 filename_sub=	settings.getSetting('fn_sub')
-date_format=	settings.getSetting('dt_format')
+date_format=	settings.getSetting('dt_fmt')
 date_label=	settings.getSetting('dt_label')
 
 # some strings
@@ -242,7 +242,7 @@ def date( s ):
   h= int( mat.group( 2 ) )
   m= int( mat.group( 3 ) )
   tm= datetime.datetime.utcfromtimestamp(ts + h * 3600 + m * 60 )
-  return tm.strftime( date_format )
+  return tm.strftime( date_fmt )
     
 def getRecordingsGroupedByProgramTitle(programTitle,latestProgramStartTime, recordingsCount):
   return getRecordingGroup( "RecordingsForProgramTitle/Television", "ProgramTitle", programTitle, latestProgramStartTime, recordingsCount)
