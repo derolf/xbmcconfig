@@ -1,4 +1,8 @@
 <advancedsettings>
+ <gui>    
+   <algorithmdirtyregions>1</algorithmdirtyregions>
+   <nofliptimeout>1000</nofliptimeout>
+ </gui>
   <video>
     <timeseekforwardbig>270</timeseekforwardbig>
     <timeseekbackwardbig>-60</timeseekbackwardbig>    
