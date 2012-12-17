@@ -5,7 +5,7 @@
         <setting label="33502" type="text"   id="ip_port" default="49943"/>
 	<setting label="33503" type="text"   id="fn_re"   default="^//([^/]*)/(.*)$"/>
         <setting label="33504" type="text"   id="fn_sub"  default="smb://\1/\2"/>
-	<setting label="33511" type="text"   id="dt_fmt"  default="smb://\1/\2"/>
+	<setting label="33511" type="text"   id="dt_fmt"  default="%d.%m.%y %H:%M"/>
 	<setting label="33512" type="text"   id="dt_label"  default="true"/>
     </category>
 </settings>
