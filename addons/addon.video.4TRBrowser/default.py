@@ -25,7 +25,7 @@ SListProgramTitleLatest= settings.getLocalizedString( 33507 )
 SSchemaChanged=		 settings.getLocalizedString( 33508 ) 
 SErrorRPC=		 settings.getLocalizedString( 33509 ) 
 SListingChanged=	 settings.getLocalizedString( 33510 ) 
-SLoadingItems=		 "Lade Eintrag %s von %s"
+SLoading=		 "Lade Eintrag %s von %s"
 
 # main
 def main():
