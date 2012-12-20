@@ -87,6 +87,14 @@ def main():
 def notification(message,time):
     xbmc.executebuiltin("Notification(4TR Browser," + message.encode( "UTF-8" ) + "," + str(time) + ")");
 
+lastProgress= 0
+def progress(cur,total):
+    global lastProgress
+    now= datetime.datetime.now()
+    if ( now - lastProgress ).total_seconds() < 1: return
+    lastProgress= now    
+    notification(SLoading % ( cur, total ), 1000 )
+
 # poor man's SQLLite singleton serializer...
 class CacheDB():
     lock= threading.Lock()
@@ -338,7 +346,11 @@ def loadGroupByAndRefreshThread( group ):
 def RecordingsForScheduleId(params):
     xbmcplugin.setContent( int(sys.argv[1]), "episodes" )
     li= getRecordingsGroupedByScheduleId( params[ "ScheduleId" ], params[ "LatestProgramStartTime" ], params[ "RecordingsCount" ] )
+    idx= 0
     for l in li:
+      idx= idx + 1
+      progress( idx, len( li ) )
+
       addRecording( l[1], len(li), True )
       
 def RecordingsForProgramTitle(params):
@@ -347,7 +359,8 @@ def RecordingsForProgramTitle(params):
     idx= 0
     for l in li:
       idx= idx + 1
-      notification( SLoading % ( idx, len(li) ), 200 )
+      progress( idx, len( li ) )
+      
       addRecording( l[1], len(li), False )
       
 def GroupBySchedule():
@@ -358,7 +371,7 @@ def GroupBySchedule():
     idx= 0
     for l in li:
       idx= idx + 1
-      notification( SLoading % ( idx, len(li) ), 200 )
+      progress( idx, len( li ) )
     	
       m= l[1]
       label= m[ 'ScheduleName' ] + " (" + str( m[ 'RecordingsCount' ] ) +")"
@@ -397,7 +410,7 @@ def ListProgramTitleLatest():
     idx= 0
     for l in li:
       idx= idx + 1
-      notification( SLoading % ( idx, len(li) ), 200 )
+      progress( idx, len( li ) )
     
       m= l[1]
       lis= getRecordingsGroupedByProgramTitle( m[ "ProgramTitle" ], m[ "LatestProgramStartTime" ], m[ "RecordingsCount" ] )
