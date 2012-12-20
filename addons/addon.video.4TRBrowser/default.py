@@ -87,13 +87,13 @@ def main():
 def notification(message,time):
     xbmc.executebuiltin("Notification(4TR Browser," + message.encode( "UTF-8" ) + "," + str(time) + ")");
 
-lastProgress= 0
+lastProgress= None
 def progress(cur,total):
     global lastProgress
     now= datetime.datetime.now()
-    if ( now - lastProgress ).total_seconds() < 1: return
+    if lastProgress is not None and ( now - lastProgress ).total_seconds() < 1: return
     lastProgress= now    
-    notification(SLoading % ( cur, total ), 1000 )
+    notification( SLoading % ( cur, total ), 1000 )
 
 # poor man's SQLLite singleton serializer...
 class CacheDB():
@@ -390,8 +390,8 @@ def GroupByProgramTitle():
     idx= 0
     for l in li:
       idx= idx + 1
-      notification( SLoading % ( idx, len(li) ), 200 )
-
+      progress( idx, len( li ) )
+  
       m= l[1]
       label= m[ 'ProgramTitle' ] + " (" + str( m[ 'RecordingsCount' ] ) +")"
       if date_label: label= label + " - " + date( m[ "LatestProgramStartTime" ] )
