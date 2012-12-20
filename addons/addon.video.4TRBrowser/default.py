@@ -54,23 +54,28 @@ def main():
       xbmc.executebuiltin("Container.SetViewMode(56)")
 
     elif cmd == "ListProgramTitleLatest":
-      ListProgramTitleLatest()
+      try: ListProgramTitleLatest()
+      except: pass
       xbmc.executebuiltin("Container.SetViewMode(52)")       
 
     elif cmd == "GroupByProgramTitle":
-      GroupByProgramTitle()
+      try: GroupByProgramTitle()
+      except: pass
       xbmc.executebuiltin("Container.SetViewMode(52)")        
       
     elif cmd == "GroupBySchedule":
-      GroupBySchedule()
+      try: GroupBySchedule()
+      except: pass
       xbmc.executebuiltin("Container.SetViewMode(52)")        
 	
     elif cmd =="RecordingsForProgramTitle":
-      RecordingsForProgramTitle( params )
+      try: RecordingsForProgramTitle( params )
+      except: pass
       xbmc.executebuiltin("Container.SetViewMode(52)")
       
     elif cmd =="RecordingsForScheduleId":
-      RecordingsForScheduleId(  params )
+      try: RecordingsForScheduleId(  params )
+      except: pass
       xbmc.executebuiltin("Container.SetViewMode(52)")
       
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
