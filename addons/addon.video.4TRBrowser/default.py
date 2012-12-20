@@ -2,7 +2,7 @@
 
 import urllib,urllib2,re,xbmcplugin,xbmcgui, xbmcaddon
 import string,re,sys,socket,os, xml.dom.minidom, operator
-import json, sqlite3, datetime, threading
+import json, sqlite3, datetime, threading, time
 from thread import start_new_thread
 from threading import Thread
 from Queue import Queue
@@ -90,8 +90,8 @@ def notification(message,time):
 lastProgress= None
 def progress(cur,total):
     global lastProgress
-    now= datetime.datetime.now()
-    if lastProgress is not None and ( now - lastProgress ).total_seconds() < 1: return
+    now= time.time()
+    if lastProgress is not None and ( now - lastProgress ) < 1: return
     lastProgress= now    
     notification( SLoading % ( cur, total ), 1000 )
 
