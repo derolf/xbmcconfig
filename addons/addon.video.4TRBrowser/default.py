@@ -25,6 +25,7 @@ SListProgramTitleLatest= settings.getLocalizedString( 33507 )
 SSchemaChanged=		 settings.getLocalizedString( 33508 ) 
 SErrorRPC=		 settings.getLocalizedString( 33509 ) 
 SListingChanged=	 settings.getLocalizedString( 33510 ) 
+SLoadingItems=		 "Lade Eintrag %s von %s"
 
 # main
 def main():
@@ -343,7 +344,10 @@ def RecordingsForScheduleId(params):
 def RecordingsForProgramTitle(params):
     xbmcplugin.setContent( int(sys.argv[1]), "episodes" )
     li= getRecordingsGroupedByProgramTitle( params[ "ProgramTitle" ], params[ "LatestProgramStartTime" ], params[ "RecordingsCount" ] )
+    idx= 0
     for l in li:
+      idx= idx + 1
+      notification( SLoading % ( idx, len(li) ), 200 )
       addRecording( l[1], len(li), False )
       
 def GroupBySchedule():
@@ -351,7 +355,11 @@ def GroupBySchedule():
   
     xbmcplugin.setContent( int(sys.argv[1]), "episodes" )
     li= getGroupByFromCache( "GroupBySchedule" )
+    idx= 0
     for l in li:
+      idx= idx + 1
+      notification( SLoading % ( idx, len(li) ), 200 )
+    	
       m= l[1]
       label= m[ 'ScheduleName' ] + " (" + str( m[ 'RecordingsCount' ] ) +")"
       if date_label: label= label + " - " + date( m[ "LatestProgramStartTime" ] )
@@ -366,7 +374,11 @@ def GroupByProgramTitle():
       
     xbmcplugin.setContent( int(sys.argv[1]), "episodes" )
     li= getGroupByFromCache( "GroupByProgramTitle" )
+    idx= 0
     for l in li:
+      idx= idx + 1
+      notification( SLoading % ( idx, len(li) ), 200 )
+
       m= l[1]
       label= m[ 'ProgramTitle' ] + " (" + str( m[ 'RecordingsCount' ] ) +")"
       if date_label: label= label + " - " + date( m[ "LatestProgramStartTime" ] )
@@ -382,8 +394,11 @@ def ListProgramTitleLatest():
     xbmcplugin.setContent( int(sys.argv[1]), "episodes" )  
 
     li= getGroupByFromCache( "GroupByProgramTitle" )
-    
+    idx= 0
     for l in li:
+      idx= idx + 1
+      notification( SLoading % ( idx, len(li) ), 200 )
+    
       m= l[1]
       lis= getRecordingsGroupedByProgramTitle( m[ "ProgramTitle" ], m[ "LatestProgramStartTime" ], m[ "RecordingsCount" ] )
       if len( lis ) > 0:
