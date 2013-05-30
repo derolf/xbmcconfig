@@ -49,8 +49,7 @@ def updateThumbnail(id, width):
     f.close()
     
 def updateRecordingById(id,recs,lock):
-    rec= JSONRPC( 'Control/RecordingById/' + id, urllib.urlencode('') )
-    lock.acquire()
+    return 
     try: recs[ id ]= rec
     finally: lock.release()
   
@@ -65,18 +64,8 @@ def updateGroup( groups, group, groupid, uri ):
     for m in req:
       id= m[ "RecordingId" ]
       if id in recs: continue
-
-      t= Thread( target=threadFine(updateThumbnail), args=( id, 512 ) )
-      t.start()
-      threads.append( t  )
       
-      t= Thread( target=threadFine(updateRecordingById), args=( m[ "RecordingId" ], recs, recslock ) )
-      t.start()
-      threads.append( t  )
-      
-    for t in threads:
-      t.join()
-      t.fine
+      recs[ id ]= JSONRPC( 'Control/RecordingById/' + id, urllib.urlencode('') )
       
     PUT( "Group", groups, groupid, recs )
     
