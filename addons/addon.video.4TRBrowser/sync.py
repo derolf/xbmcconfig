@@ -48,11 +48,6 @@ def updateThumbnail(id, width):
     f.write(tbn)
     f.close()
     
-def updateRecordingById(id,recs,lock):
-    return 
-    try: recs[ id ]= rec
-    finally: lock.release()
-  
 def updateGroup( groups, group, groupid, uri ):
     recs= GET( "Group", groups, groupid )
     if recs is None: recs= {}
@@ -65,6 +60,7 @@ def updateGroup( groups, group, groupid, uri ):
       id= m[ "RecordingId" ]
       if id in recs: continue
       
+      updateThumbnail( id, 512 )
       recs[ id ]= JSONRPC( 'Control/RecordingById/' + id, urllib.urlencode('') )
       
     PUT( "Group", groups, groupid, recs )
