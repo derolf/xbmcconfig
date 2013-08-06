@@ -6,7 +6,7 @@ from threading import Thread, Lock
 from shared import *
 
 # globals
-ip_addr= 	"derolf.zapto.org"
+ip_addr= 	"htpc"
 ip_port= 	"49943"
 webaddress= 	"http://" + ip_addr + ":" + ip_port
 
