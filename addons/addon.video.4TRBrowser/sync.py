@@ -45,7 +45,7 @@ def updateThumbnail(id, width):
     tbn= RPC( "Control/RecordingThumbnail/%s/%d/0/1900-01-01" % ( id, width ), urllib.urlencode( '' ) )[ "content" ]
     XPUT( "Thumbs", path, tbn )
     
-def updateGroup( groups, group, groupid, uri, result ):
+def updateGroup( groups, group, groupid, uri ):
     recs= GET( "Group", groups, groupid )
     if recs is None: recs= {}
       
