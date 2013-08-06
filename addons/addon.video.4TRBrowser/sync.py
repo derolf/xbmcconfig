@@ -1,7 +1,7 @@
 # (C) dero, based on jhh's initial XBMC-4tr "simple" client
 
 import urllib, urllib2, os
-import json, threading, shutil
+import json, threading, shutil, operator
 from threading import Thread, Lock
 from shared import *
 
@@ -40,15 +40,12 @@ def threadFine( func ):
   return wrap
   
 def updateThumbnail(id, width):
-  path= cachePath + "/thumbs/%sx%d.jpg" % ( id, width )
-  
-  if not os.path.exists(path):
+  path= "%sx%d.jpg" % ( id, width )
+  if not EXISTS( "Thumbs", path ):
     tbn= RPC( "Control/RecordingThumbnail/%s/%d/0/1900-01-01" % ( id, width ), urllib.urlencode( '' ) )[ "content" ]
-    f= open(path, 'wb')
-    f.write(tbn)
-    f.close()
+    XPUT( "Thumbs", path, tbn )
     
-def updateGroup( groups, group, groupid, uri ):
+def updateGroup( groups, group, groupid, uri, result ):
     recs= GET( "Group", groups, groupid )
     if recs is None: recs= {}
       
@@ -66,7 +63,7 @@ def updateGroup( groups, group, groupid, uri ):
     PUT( "Group", groups, groupid, recs )
     
 def updateGroups( groups, groupkey, uri ):
-    cached= GET( "Group", groups )
+    cached= GET( "Group", groups, "_" )
     if cached is None: cached= {}
     
     ID= 0
@@ -96,7 +93,13 @@ def updateGroups( groups, groupkey, uri ):
       t.join()
       t.fine
       
-    PUT( "Group", groups, cached )
+    for cm in cached.values():      
+      li= GET( "Group", groups, cm[ "ID" ] ).values()
+      li= sorted(li, key=operator.itemgetter("ProgramStartTime"), reverse = True)      
+      cm["Latest"]= li[0] if len(li)>0 else None
+      
+    PUT( "Group", groups, "_", cached )
+    
 
 try: os.mkdir( cachePath )
 except: pass

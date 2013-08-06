@@ -104,9 +104,8 @@ def addDirectoryItemURL( label, label2, info, iconimage, u, total ):
     xbmcplugin.addDirectoryItem( handle=int(sys.argv[1]),url=u,listitem=liz,isFolder=False, totalItems= total )
 
 def getThumbnailURL(id, width):
-    path= cachePath + "/thumbs/%sx%d.jpg" % ( id, width )
-    if not os.path.exists(path) or os.path.getsize(path) == 0: return None
-    return path
+    path= "%sx%d.jpg" % ( id, width )
+    return URL( "Thumbs", path )
     
 def getLatestCachedThumbnailURL( recs, width ):
     if lst is None: return None
@@ -146,6 +145,7 @@ def addRecording( d, total, includeTitle ):
 	label= title
 
     tn= getThumbnailURL( d[ "RecordingId" ], 512 ) or ""
+    print tn
     plot= d[ "Description" ]
     tagline= date( d[ "ProgramStartTime" ] )
 	
@@ -183,7 +183,7 @@ def RecordingsForProgramTitle(params):
       
 def GroupBySchedule():
     xbmcplugin.setContent( int(sys.argv[1]), "episodes" )
-    li= GET( "Group", "GroupBySchedule" ).values()
+    li= GET( "Group", "GroupBySchedule", "_" ).values()
     li= sorted(li, key=operator.itemgetter("LatestProgramStartTime"), reverse = True)
     idx= 0
     for m in li:
@@ -194,13 +194,12 @@ def GroupBySchedule():
       if date_label: label= label + " - " + date( m[ "LatestProgramStartTime" ] )
       info= { "Title": m[ 'ScheduleName' ], "Tagline": date( m[ "LatestProgramStartTime" ] ) }
       params= { "ID" : m[ "ID" ] }
-      tn= "" # getLatestCachedThumbnailURL( getCachedLatestRecordings( "ScheduleId", m[ "ScheduleId" ] ), 512 )
-      tn= tn if tn else ""
+      tn= getThumbnailURL( m["Latest"][ "RecordingId" ], 512 ) if m["Latest"] is not None else ""
       addDirectoryItem( label, "", info, tn, params, 'RecordingsForScheduleId', True, len(li) )
       
 def GroupByProgramTitle():
     xbmcplugin.setContent( int(sys.argv[1]), "episodes" )
-    li= GET( "Group", "GroupByProgramTitle" ).values()
+    li= GET( "Group", "GroupByProgramTitle", "_" ).values()
     li= sorted(li, key=operator.itemgetter("LatestProgramStartTime"), reverse = True)
     idx= 0
     for m in li:
@@ -211,24 +210,22 @@ def GroupByProgramTitle():
       if date_label: label= label + " - " + date( m[ "LatestProgramStartTime" ] )
       info= { "Title": m[ 'ProgramTitle' ], "Tagline": date( m[ "LatestProgramStartTime" ] ) }
       params= { "ID" : m[ "ID" ] }
-      tn= "" # getLatestCachedThumbnailURL( getCachedLatestRecordings( "ProgramTitle", m[ "ProgramTitle" ] ), 512 )
+      tn= getThumbnailURL( m["Latest"][ "RecordingId" ], 512 ) if m["Latest"] is not None else ""
       tn= tn if tn else ""
       addDirectoryItem( label, "", info, tn, params, 'RecordingsForProgramTitle', True, len(li) )   
       
 def ListProgramTitleLatest():
     xbmcplugin.setContent( int(sys.argv[1]), "episodes" )  
 
-    li= GET( "Group", "GroupByProgramTitle" ).values()
+    li= GET( "Group", "GroupByProgramTitle", "_" ).values()
     li= sorted(li, key=operator.itemgetter("LatestProgramStartTime"), reverse = True)
     idx= 0
     for l in li:
       idx= idx + 1
       progress( idx, len( li ) )
       
-      lis= GET( "Group", "GroupByProgramTitle", l[ "ID" ] ).values()
-      lis= sorted(lis, key=operator.itemgetter("ProgramStartTime"), reverse = True)
-      if len( lis ) > 0:
-	addRecording( lis[0], len(li), True )
+      if l[ "Latest" ] is not None:
+	addRecording( l["Latest"], len(li), True )
 	
 # call main!
 main()
