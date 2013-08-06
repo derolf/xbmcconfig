@@ -5,15 +5,9 @@ import json, threading, shutil, operator
 from threading import Thread, Lock
 from shared import *
 
-# globals
-ip_addr= 	"htpc"
-ip_port= 	"49943"
-webaddress= 	"http://" + ip_addr + ":" + ip_port
-
-    
 # call 4TR    
 def RPC(endpoint, post):
-    url=      webaddress + '/ForTheRecord/' + endpoint
+    url=      ftrPath + '/' + endpoint
     print "Calling FTR: " + url
     WebSock=  urllib2.urlopen(url, post)
     content=  WebSock.read()
@@ -86,17 +80,17 @@ def updateGroups( groups, groupkey, uri ):
       cached[ group ]= m
       
       t= Thread( target=threadFine(updateGroup), args=( groups, group, m[ "ID" ], uri ) )
+      t.m= m
       t.start()
       threads.append( t  )
       
     for t in threads:
       t.join()
       t.fine
-      
-    for cm in cached.values():      
-      li= GET( "Group", groups, cm[ "ID" ] ).values()
+      m= t.m
+      li= GET( "Group", groups, m[ "ID" ] ).values()
       li= sorted(li, key=operator.itemgetter("ProgramStartTime"), reverse = True)      
-      cm["Latest"]= li[0] if len(li)>0 else None
+      m["Latest"]= li[0] if len(li)>0 else None
       
     PUT( "Group", groups, "_", cached )
     
