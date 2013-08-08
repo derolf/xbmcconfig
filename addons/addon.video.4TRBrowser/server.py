@@ -5,7 +5,7 @@ from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
  
 import os, shutil
  
-path= os.path.abspath('./cache')
+path= os.path.abspath('/mnt/Public/4TR/cache')
  
 # -----------------------------------------------------------------------
 
