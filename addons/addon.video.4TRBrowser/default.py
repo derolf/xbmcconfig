@@ -182,8 +182,8 @@ def GroupBySchedule():
       progress( idx, len( li ) )
     	
       label= m[ 'ScheduleName' ] + " (" + str( m[ 'RecordingsCount' ] ) +")"
-      if date_label: label= label + " - " + date( m[ "LatestProgramStartTime" ] )
-      info= { "Title": m[ 'ScheduleName' ], "Tagline": date( m[ "LatestProgramStartTime" ] ) }
+      label= label + " - " + date( m[ "LatestProgramStartTime" ] )
+      info= {}
       params= { "ID" : m[ "ID" ] }
       tn= getThumbnailURL( m["Latest"][ "RecordingId" ], 512 ) if m["Latest"] is not None else ""
       addDirectoryItem( label, "", info, tn, params, 'RecordingsForScheduleId', True, len(li) )
@@ -198,8 +198,8 @@ def GroupByProgramTitle():
       progress( idx, len( li ) )
   
       label= m[ 'ProgramTitle' ] + " (" + str( m[ 'RecordingsCount' ] ) +")"
-      if date_label: label= label + " - " + date( m[ "LatestProgramStartTime" ] )
-      info= { "Title": m[ 'ProgramTitle' ], "Tagline": date( m[ "LatestProgramStartTime" ] ) }
+      label= label + " - " + date( m[ "LatestProgramStartTime" ] )
+      info= {}
       params= { "ID" : m[ "ID" ] }
       tn= getThumbnailURL( m["Latest"][ "RecordingId" ], 512 ) if m["Latest"] is not None else ""
       tn= tn if tn else ""
