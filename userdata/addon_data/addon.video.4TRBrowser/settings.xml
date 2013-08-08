@@ -1,8 +1,0 @@
-<settings>
-    <setting id="dt_fmt" value="%d.%m.%y %H:%M" />
-    <setting id="dt_label" value="false" />
-    <setting id="fn_re" value="^//([^/]*)/(.*)$" />
-    <setting id="fn_sub" value="smb://HTPC/\2" />
-    <setting id="ip_addr" value="htpc" />
-    <setting id="ip_port" value="49943" />
-</settings>

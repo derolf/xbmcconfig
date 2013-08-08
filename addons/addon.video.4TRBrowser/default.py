@@ -19,18 +19,10 @@ date_label=	settings.getSetting('dt_label').lower() == "true"
 SGroupBySchedule= 	 settings.getLocalizedString( 33505 ) 
 SGroupByProgramTitle=	 settings.getLocalizedString( 33506 ) 
 SListProgramTitleLatest= settings.getLocalizedString( 33507 ) 
-SSchemaChanged=		 settings.getLocalizedString( 33508 ) 
-SErrorRPC=		 settings.getLocalizedString( 33509 ) 
-SListingChanged=	 settings.getLocalizedString( 33510 ) 
-SLoading=		 "Lade Eintrag %s von %s"
+SLoading=		 settings.getLocalizedString( 33513 ) 
 
 # main
 def main():
-    try: os.mkdir( cachePath )
-    except: pass
-    
-    checkSchema()
-  
     params= None
     cmd=    None
 
@@ -52,28 +44,23 @@ def main():
       xbmc.executebuiltin("Container.SetViewMode(56)")
 
     elif cmd == "ListProgramTitleLatest":
-      try: ListProgramTitleLatest()
-      except: pass
+      ListProgramTitleLatest()
       xbmc.executebuiltin("Container.SetViewMode(52)")       
 
     elif cmd == "GroupByProgramTitle":
-      try: GroupByProgramTitle()
-      except: pass
+      GroupByProgramTitle()
       xbmc.executebuiltin("Container.SetViewMode(52)")        
       
     elif cmd == "GroupBySchedule":
-      try: GroupBySchedule()
-      except: pass
+      GroupBySchedule()
       xbmc.executebuiltin("Container.SetViewMode(52)")        
 	
     elif cmd =="RecordingsForProgramTitle":
-      try: RecordingsForProgramTitle( params )
-      except: pass
+      RecordingsForProgramTitle( params )
       xbmc.executebuiltin("Container.SetViewMode(52)")
       
     elif cmd =="RecordingsForScheduleId":
-      try: RecordingsForScheduleId(  params )
-      except: pass
+      RecordingsForScheduleId(  params )
       xbmc.executebuiltin("Container.SetViewMode(52)")
       
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
@@ -107,13 +94,6 @@ def getThumbnailURL(id, width):
     path= "%sx%d.jpg" % ( id, width )
     return URL( "Thumbs", path )
     
-def getLatestCachedThumbnailURL( recs, width ):
-    if lst is None: return None
-    for r in recs:
-      url= getThumbnailURL( r[ "RecordingId" ], width )
-      if url is not None: return url
-    return None
-  
 # pattern to parse dotnet JSON dates
 date_re= re.compile(r"^/Date\((.*)\+(..)(..)\)/$")    
  
@@ -130,30 +110,41 @@ def buildPlaybackURL(filename):
     filename= filename.replace( "\\", "/" )
     return filename_re.sub( filename_sub, filename )
   
-def addRecording( d, total, includeTitle ):
+def comma(l):
+    r= ""
+    for i in range(0,len(l)):
+      if i > 0: r= r+ ", "
+      r= r + l[ i ]
+    return r
+  
+def addRecording( d, total ):
     subTitle= d[ 'SubTitle' ]
     title= d[ "Title" ]
+    episode= d[ 'EpisodeNumberDisplay' ]
       
-    if includeTitle:
-      label= title
-      if subTitle != "":
-	label= label + ": " + subTitle
-    else:
-      if subTitle != "":
-	label= subTitle
-      else:
-	label= title
-
-    tn= getThumbnailURL( d[ "RecordingId" ], 512 ) or ""
-    print tn
+    if subTitle != "": label= subTitle
+    else: label= title
+    l= list()
+    l.append( date( d[ "ProgramStartTime" ] ) )
+    if episode != "": l.append( episode )
+    if subTitle != "": l.append( title )
+    if len(l)>0: label= label + " (" + comma(l) + ")"
+      
+    tn= getThumbnailURL( d[ "RecordingId" ], 512 )
     plot= d[ "Description" ]
-    tagline= date( d[ "ProgramStartTime" ] )
-	
-    if d[ 'EpisodeNumberDisplay' ] != '':
-      label= label + " (" + d[ 'EpisodeNumberDisplay' ] + ")"
-      tagline= tagline + " - " + d[ 'EpisodeNumberDisplay' ]
-    if date_label: label= label + " - " + date( d[ "ProgramStartTime" ] )
-    info=  { "Plot": plot, "Tagline": tagline, "Title": subTitle }
+    
+    tit= date( d[ "ProgramStartTime" ] )
+    if subTitle != "": tit= tit + ": " + subTitle
+    else: tit= tit + ": " + title
+    
+    if subTitle != "": sub= subTitle
+    else: sub= title
+    l= list()
+    if episode != "": l.append( episode )
+    if subTitle != "": l.append( title )
+    if len(l)>0: sub= sub + " (" + comma(l) + ")"
+    
+    info=  { "Plot": sub + ": " + plot, "Title": tit }
     
     addDirectoryItemURL( label, "", info, tn, buildPlaybackURL( d[ "RecordingFileName" ] ), total )
       
@@ -169,7 +160,7 @@ def RecordingsForScheduleId(params):
     for l in li:
       idx= idx + 1
       progress( idx, len( li ) )
-      addRecording( l, len(li), True )
+      addRecording( l, len(li) )
       
 def RecordingsForProgramTitle(params):
     xbmcplugin.setContent( int(sys.argv[1]), "episodes" )
@@ -179,7 +170,7 @@ def RecordingsForProgramTitle(params):
     for l in li:
       idx= idx + 1
       progress( idx, len( li ) )
-      addRecording( l, len(li), True )
+      addRecording( l, len(li) )
       
 def GroupBySchedule():
     xbmcplugin.setContent( int(sys.argv[1]), "episodes" )
@@ -225,7 +216,7 @@ def ListProgramTitleLatest():
       progress( idx, len( li ) )
       
       if l[ "Latest" ] is not None:
-	addRecording( l["Latest"], len(li), True )
+	addRecording( l["Latest"], len(li) )
 	
 # call main!
 main()

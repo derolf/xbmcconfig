@@ -1,16 +1,10 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <strings>
-    <string id="33500">ForTheRecord</string>
-    <string id="33501">ForTheRecord-Server</string>
-    <string id="33502">ForTheRecord-Port</string>
     <string id="33503">RegExp-Pattern für Dateipfad-Substitution</string>
     <string id="33504">Ersetzungsregel für Dateipfad-Substitution</string>
     <string id="33505">Nach Plantitel gruppieren</string>
     <string id="33506">Nach Filmtitel gruppieren</string>
     <string id="33507">Letzte Aufnahme fuer jeden Filmtitel auflisten</string>
-    <string id="33508">Schema geändert -- Cache wird geleert</string>
-    <string id="33509">Fehler beim Verbinden mit dem ForTheRecord server (siehe Log)</string>
-    <string id="33510">Liste hat sich verändert</string>
     <string id="33511">Datumsformat</string>
-    <string id="33512">Datum ans Label anhängen</string>
+    <string id="33513">Lade Eintrag %s von %s</string>
 </strings>

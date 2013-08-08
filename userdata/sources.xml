@@ -5,19 +5,19 @@
     <video>
         <default pathversion="1"></default>
         <source>
-            <name>Videos</name>
-            <path pathversion="1">smb://HTPC/Videos/</path>
+            <name>Kinder</name>
+            <path pathversion="1">smb://stuff/Public/Shared Videos/Videos/Kinder/</path>
         </source>
         <source>
-            <name>Kinder</name>
-            <path pathversion="1">smb://HTPC/Videos/Kinder/</path>
+            <name>Eltern</name>
+	    <path pathversion="1">smb://stuff/Public/Shared Videos/Videos/Eltern/</path>
         </source>
     </video>
     <music>
         <default pathversion="1">Alle</default>
         <source>
             <name>Alle</name>
-            <path pathversion="1">smb://HTPC/Music/Picard/</path>
+	    <path pathversion="1">smb://stuff/Public/Shared Music/Picard/</path>
         </source>
     </music>
     <pictures>
