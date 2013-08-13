@@ -42,6 +42,8 @@ def updateThumbnail(id, width):
 def updateGroup( groups, group, groupid, uri ):
     recs= GET( "Group", groups, groupid )
     if recs is None: recs= {}
+    
+    newrecs= {}
       
     recslock= Lock()
     threads= []
@@ -49,12 +51,14 @@ def updateGroup( groups, group, groupid, uri ):
     req= JSONRPC( "Control/" + uri + "/" + urllib.quote(group.encode("UTF-8")), urllib.urlencode('') )
     for m in req:
       id= m[ "RecordingId" ]
-      if id in recs: continue
+      if id in recs: 
+	newrecs[ id ]= recs[ id ]
+	continue
       
       updateThumbnail( id, 512 )
-      recs[ id ]= JSONRPC( 'Control/RecordingById/' + id, urllib.urlencode('') )
+      newrecs[ id ]= JSONRPC( 'Control/RecordingById/' + id, urllib.urlencode('') )
       
-    PUT( "Group", groups, groupid, recs )
+    PUT( "Group", groups, groupid, newrecs )
     
 def updateGroups( groups, groupkey, uri ):
     cached= GET( "Group", groups, "_" )
