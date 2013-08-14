@@ -63,7 +63,7 @@ def main():
       RecordingsForScheduleId(  params )
       xbmc.executebuiltin("Container.SetViewMode(52)")
       
-    xbmcplugin.endOfDirectory(int(sys.argv[1]))
+    xbmcplugin.endOfDirectory(handle=int(sys.argv[1]),cacheToDisc=False)
     
     print "DONE"
   

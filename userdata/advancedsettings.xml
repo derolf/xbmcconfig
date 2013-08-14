@@ -1,6 +1,7 @@
 <advancedsettings>
   <video>
     <timeseekforwardbig>270</timeseekforwardbig>
-    <timeseekbackwardbig>-60</timeseekbackwardbig>    
+    <timeseekbackwardbig>-60</timeseekbackwardbig>
+    <timeseekbackward>-7</timeseekbackward>
   </video>
 </advancedsettings>
