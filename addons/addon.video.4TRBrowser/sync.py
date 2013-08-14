@@ -6,19 +6,23 @@ from threading import Thread, Lock
 from shared import *
 
 # call 4TR    
-def RPC(endpoint, post):
+def RPC(endpoint, contentType, post):
     url=      ftrPath + '/' + endpoint
-    print "Calling FTR: " + url
-    WebSock=  urllib2.urlopen(url, post)
+    print "Calling FTR: " + url + " - " + post
+    request = urllib2.Request(url)
+    if post is not None: request.add_data(post)
+    if contentType is not None: request.add_header( "content-type", contentType )
+    WebSock= urllib2.urlopen( request )
     content=  WebSock.read()
     headers=  WebSock.headers
     WebSock.close()
     return { "content": content, "headers" : headers }
     
 def JSONRPC(endpoint, post):
-    res= RPC( endpoint, post )
+    res= RPC( endpoint, "application/json", json.dumps( post, encoding="UTF-8" ) )
     content=  res[ "content" ]
-    charset=  res[ "headers" ]['content-type'].split('charset=')[-1]    
+    #charset=  res[ "headers" ]['content-type'].split('charset=')[-1]    
+    charset= "UTF-8"
     return json.loads( content, charset )
   
 def dictFromList( li, key ):
@@ -36,7 +40,7 @@ def threadFine( func ):
 def updateThumbnail(id, width):
   path= "%sx%d.jpg" % ( id, width )
   if not EXISTS( "Thumbs", path ):
-    tbn= RPC( "Control/RecordingThumbnail/%s/%d/0/1900-01-01" % ( id, width ), urllib.urlencode( '' ) )[ "content" ]
+    tbn= RPC( "Control/RecordingThumbnail/%s/%d/0/1900-01-01" % ( id, width ), None, "" )[ "content" ]
     XPUT( "Thumbs", path, tbn )
     
 def updateGroup( groups, group, groupid, uri ):
@@ -48,7 +52,7 @@ def updateGroup( groups, group, groupid, uri ):
     recslock= Lock()
     threads= []
     
-    req= JSONRPC( "Control/" + uri + "/" + urllib.quote(group.encode("UTF-8")), urllib.urlencode('') )
+    req= JSONRPC( "Control/" + uri, group )
     for m in req:
       id= m[ "RecordingId" ]
       if id in recs: 
@@ -56,7 +60,7 @@ def updateGroup( groups, group, groupid, uri ):
 	continue
       
       updateThumbnail( id, 512 )
-      newrecs[ id ]= JSONRPC( 'Control/RecordingById/' + id, urllib.urlencode('') )
+      newrecs[ id ]= JSONRPC( 'Control/RecordingById/' + id, "" )
       
     PUT( "Group", groups, groupid, newrecs )
     
@@ -70,7 +74,7 @@ def updateGroups( groups, groupkey, uri ):
 
     threads= []
     
-    req= JSONRPC( 'Control/RecordingGroups/Television/' + groups, urllib.urlencode('') )
+    req= JSONRPC( 'Control/RecordingGroups/Television/' + groups, "" )
     for m in req:
       group= m[ groupkey ]
       if group in cached:
@@ -103,5 +107,5 @@ try: os.mkdir( cachePath )
 except: pass
      
 checkSchema()
-updateGroups("GroupBySchedule","ScheduleId", "RecordingsForSchedule")
-updateGroups("GroupByProgramTitle","ProgramTitle", "RecordingsForProgramTitle/Television")
+updateGroups("GroupBySchedule","ScheduleId", "GetRecordingsForSchedule")
+updateGroups("GroupByProgramTitle","ProgramTitle", "GetRecordingsForProgramTitle/Television")
